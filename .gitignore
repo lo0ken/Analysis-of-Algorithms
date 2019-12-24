@@ -5,6 +5,8 @@
 
 # Intellij
 .idea/
+out/
+*.class
 *.iml
 *.iws
 
@@ -14,3 +16,11 @@
 # Maven
 log/
 target/
+
+# TeX
+*.jpg
+*.png
+*.txt
+*.tex
+*.gz
+*.drawio
