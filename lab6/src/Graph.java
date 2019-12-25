@@ -27,4 +27,12 @@ public class Graph {
             }
         }
     }
+
+    public int[][] getDistance() {
+        return distance;
+    }
+
+    public int getVertexCount() {
+        return vertexCount;
+    }
 }
