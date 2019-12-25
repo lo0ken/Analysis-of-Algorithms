@@ -9,59 +9,64 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class BruteForce {
-    public static Route getShortestRoute(Graph graph) {
-        int[] routeIndexes = new int[graph.getVertexCount() - 1];
-        for (int i = 0; i < graph.getVertexCount() - 1; i++) {
-            routeIndexes[i] = i + 1;
-        }
-
-        var allTracks = new TracksManipulator(IntStream.of(routeIndexes).boxed().collect(Collectors.toList())).getAllTracks();
+    public static int getShortestRoute(Graph graph) {
+        int[] arr = initArray(graph.getVertexCount());
+        var allTracks = findAllRoutes(arr);
+        //var allTracks = new TracksManipulator(IntStream.of(routeIndexes).boxed().collect(Collectors.toList())).getAllTracks();
 
         int minDistance = Integer.MAX_VALUE;
-        Route shortestRoute = null;
 
         for (List<Integer> track : allTracks) {
-            track.add(0, 0);
-            track.add(0);
             Route currentRoute = new Route(graph, track);
             int currentDistance = currentRoute.getDistance();
             if (currentDistance < minDistance) {
-                minDistance =  currentDistance;
-                shortestRoute = currentRoute;
+                minDistance = currentDistance;
             }
         }
 
-        return shortestRoute;
+        return minDistance;
     }
 
-    private static class TracksManipulator {
-        private List<Integer> vertexes;
-        private List<Integer> currentRoute;
-        private List<List<Integer>> result;
+    private static int factorial(int n) {
+        return (n > 0) ? n * factorial(n - 1) : 1;
+    }
 
-        TracksManipulator(List<Integer> vertexes) {
-            this.vertexes = vertexes;
-            currentRoute = new ArrayList<>();
-            result = new ArrayList<>();
+    private static int[] initArray(int count) {
+        int[] arr = new int[count + 1];
+        for (int i = 0; i < count; i++) {
+            arr[i] = i;
+        }
+        arr[count] = 0;
+        return arr;
+    }
+
+    private static List<List<Integer>> findAllRoutes(int[] arr) {
+        List<List<Integer>> routes = new ArrayList<>();
+
+        if (arr.length == 3) {
+            routes.add(new ArrayList<>() {{
+                add(arr[0]);
+                add(arr[1]);
+                add(arr[2]);
+            }});
+            return routes;
         }
 
-        public List<List<Integer>> getAllTracks() {
-            if (vertexes.size() == 0) {
-                result.add(currentRoute);
-                return result;
+        int count = factorial(arr.length - 2);
+        int max = arr.length - 2;
+        int shift = max;
+        while (count > 0) {
+            int t = arr[shift];
+            arr[shift] = arr[shift - 1];
+            arr[shift - 1] = t;
+            routes.add(IntStream.of(arr).boxed().collect(Collectors.toList()));
+            count--;
+            if (shift < 3) {
+                shift = max;
+            } else {
+                shift--;
             }
-
-            for (int i = 0; i < vertexes.size(); i++) {
-                List<Integer> nextVertexes = new ArrayList<>(vertexes);
-                nextVertexes.remove(i);
-                List<Integer> nextRoute = new ArrayList<>(currentRoute);
-                nextRoute.add(vertexes.get(i));
-
-                vertexes = nextVertexes;
-                currentRoute = nextRoute;
-                getAllTracks();
-            }
-            return result;
         }
+        return routes;
     }
 }
