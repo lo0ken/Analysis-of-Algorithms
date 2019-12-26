@@ -68,7 +68,6 @@ public class AntAlgorithm {
                 for (Ant ant : ants) {
                     ant.visitVertex(ant.getStartVertex());
                     int currentDistance = ant.getDistance();
-                    System.out.println(currentDistance);
                     if (currentDistance < minDistance) {
                         minDistance = currentDistance;
                         shortestRoute = ant.getRoute();

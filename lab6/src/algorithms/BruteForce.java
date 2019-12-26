@@ -12,7 +12,6 @@ public class BruteForce {
     public static int getShortestRoute(Graph graph) {
         int[] arr = initArray(graph.getVertexCount());
         var allTracks = findAllRoutes(arr);
-        //var allTracks = new TracksManipulator(IntStream.of(routeIndexes).boxed().collect(Collectors.toList())).getAllTracks();
 
         int minDistance = Integer.MAX_VALUE;
 
