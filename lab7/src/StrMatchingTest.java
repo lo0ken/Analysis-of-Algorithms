@@ -20,7 +20,7 @@ class StrMatchingTest {
     }
 
     @Test
-    public void TestKMPRandom() {
+    public void testKMPRandom() {
         for (int i = 0; i < N; i++) {
             String s = Character.toString(random.nextInt(999999) + 1000);
             String sub = Character.toString(random.nextInt(999) + 100);
@@ -32,7 +32,7 @@ class StrMatchingTest {
     }
 
     @Test
-    public void TestBMRandom() {
+    public void testBMRandom() {
         for (int i = 0; i < N; i++) {
             String s = Character.toString(random.nextInt(999999) + 1000);
             String sub = Character.toString(random.nextInt(999) + 100);
@@ -44,7 +44,7 @@ class StrMatchingTest {
     }
 
     @Test
-    public void TestStandardSameLength() {
+    public void testStandardSameLength() {
         for (int i = 0; i < N; i++) {
             String s = Character.toString(random.nextInt(999) + 100);
             String sub = Character.toString(random.nextInt(999) + 100);
@@ -56,7 +56,7 @@ class StrMatchingTest {
     }
 
     @Test
-    public void TestKMPSameLength() {
+    public void testKMPSameLength() {
         for (int i = 0; i < N; i++) {
             String s = Character.toString(random.nextInt(999) + 100);
             String sub = Character.toString(random.nextInt(999) + 100);
@@ -68,7 +68,7 @@ class StrMatchingTest {
     }
 
     @Test
-    public void TestBMSameLength() {
+    public void testBMSameLength() {
         for (int i = 0; i < N; i++) {
             String s = Character.toString(random.nextInt(999) + 100);
             String sub = Character.toString(random.nextInt(999) + 100);

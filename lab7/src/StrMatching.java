@@ -32,61 +32,6 @@ public class StrMatching {
         return -1;
     }
 
-    static int[] prefixFunction(String substr) {
-        int[] prefix = new int[substr.length()];
-
-        int lastPrefix = prefix[0] = 0;
-        for (int i = 1; i < substr.length(); i++) {
-            while (lastPrefix > 0 && substr.charAt(lastPrefix) != substr.charAt(i))
-                lastPrefix = prefix[lastPrefix - 1];
-
-            if (substr.charAt(lastPrefix) == substr.charAt(i))
-                lastPrefix++;
-
-            prefix[i] = lastPrefix;
-        }
-        return prefix;
-    }
-
-    static boolean isPrefix(String x, int p) {
-        int j = 0;
-        for (int i = p; i < x.length(); i++) {
-            if (x.charAt(i) != x.charAt(j))
-                return false;
-            j++;
-        }
-        return true;
-    }
-
-    static int getSuffixLength(String substr, int p) {
-        int len = 0;
-        int i = p, j = substr.length() - 1;
-        while (i >= 0 && substr.charAt(i) == substr.charAt(i)) {
-            len++;
-            i--;
-            j--;
-        }
-        return len;
-    }
-
-    static int[] getSuffix(String substr) {
-        int[] table = new int[substr.length()];
-        int lastPrefixPosition = substr.length();
-
-        for (int i = substr.length() - 1; i >= 0; i--) {
-            if (isPrefix(substr, i + 1))
-                lastPrefixPosition = i + 1;
-            table[substr.length() - 1 - i] = lastPrefixPosition - i + substr.length() - 1;
-        }
-
-        for (int i = 0; i < substr.length() - 1; i++) {
-            int slen = getSuffixLength(substr, i);
-            table[slen] = substr.length() - 1 - i + slen;
-        }
-
-        return table;
-    }
-
     public static int BM(String str, String substr) {
         if (substr.length() == 0)
             return -1;
@@ -112,5 +57,60 @@ public class StrMatching {
             i += Math.max(a, b);
         }
         return -1;
+    }
+
+    private static int[] prefixFunction(String substr) {
+        int[] prefix = new int[substr.length()];
+
+        int lastPrefix = prefix[0] = 0;
+        for (int i = 1; i < substr.length(); i++) {
+            while (lastPrefix > 0 && substr.charAt(lastPrefix) != substr.charAt(i))
+                lastPrefix = prefix[lastPrefix - 1];
+
+            if (substr.charAt(lastPrefix) == substr.charAt(i))
+                lastPrefix++;
+
+            prefix[i] = lastPrefix;
+        }
+        return prefix;
+    }
+
+    private static boolean isPrefix(String x, int p) {
+        int j = 0;
+        for (int i = p; i < x.length(); i++) {
+            if (x.charAt(i) != x.charAt(j))
+                return false;
+            j++;
+        }
+        return true;
+    }
+
+    private static int getSuffixLength(String substr, int p) {
+        int len = 0;
+        int i = p, j = substr.length() - 1;
+        while (i >= 0 && substr.charAt(i) == substr.charAt(i)) {
+            len++;
+            i--;
+            j--;
+        }
+        return len;
+    }
+
+    private static int[] getSuffix(String substr) {
+        int[] table = new int[substr.length()];
+        int lastPrefixPosition = substr.length();
+
+        for (int i = substr.length() - 1; i >= 0; i--) {
+            if (isPrefix(substr, i + 1))
+                lastPrefixPosition = i + 1;
+            table[substr.length() - 1 - i] = lastPrefixPosition - i + substr.length() - 1;
+        }
+
+        for (int i = 0; i < substr.length() - 1; i++) {
+            int slen = getSuffixLength(substr, i);
+            table[slen] = substr.length() - 1 - i + slen;
+        }
+
+        return table;
     }
 }
